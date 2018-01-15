@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>倒计时</title>
+</head>
+<body>
+<div id="demo"></div>
+<script>
+    var demo = document.querySelector('#demo');
+    var endTime = new Date("2018/01/10 15:00:00").getTime();
+    var nn = (b)=>{
+        if(b<10){
+            return '0'+b;
+        }else{
+            return b;
+        }
+    };
+    var fn = ()=>{
+        var nowTime = new Date().getTime();
+        var dao = parseInt((endTime - nowTime)/1000);
+        var d = nn(parseInt(dao/60/60/24));
+        var h = nn(parseInt(dao/60/60%24));
+        var m = nn(parseInt(dao/60%60));
+        var s = nn(parseInt(dao%60));
+
+        demo.innerHTML = "结束还有"+d+"天"+h+"小时"+m+"分钟"+s+"秒";
+    };
+    setInterval(fn, 1000);
+</script>
+</body>
+</html>
