@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>video</title>
+</head>
+<body>
+<!--
+    不管是video还是audio都不要直接设置标签src
+    格式问题：每个浏览器的音视频格斯支持不同
+    希望兼容各种模式
+    可以通过source节点的形式设置
+-->
+
+<!--如果html中遇到不认识的标签就会转换成块级元素-->
+<video>
+    <!--html解析过程中会找其中第一个能认识的格式播放；一旦找到认识的视频格式，就不会向后找了-->
+    <source src="nnn.mp4">
+    <source src="nnn.webm">
+    <source src="nnn.avi">
+    <!--这里可以写兼容提示-->
+    <span>弱爆了</span>
+</video>
+</body>
+</html>

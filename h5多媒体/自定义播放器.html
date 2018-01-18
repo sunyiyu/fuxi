@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义播放器</title>
+</head>
+<body>
+<video id="video" src="fun.mp4" controls></video>
+<div>
+    <!--进度条-->
+    <progress id="progress" value="0" min="0" max="100"></progress>
+    <span>00:00</span>/<span>02:44</span>
+</div>
+<div>
+    <button id="btn_play">播放</button>
+    <button id="btn_pause" disabled>暂停</button>
+    <button id="btn_muted">静音</button>
+    <input id="volume" type="range" min="0" max="1" step="0.1">
+    <button id="btn_fullscreen">全屏</button>
+    <button id="btn_speed_up">加速</button>
+    <button id="btn_speed_down">减速</button>
+    <button id="btn_forward">前进5s</button>
+    <button id="btn_back">后退5s</button>
+</div>
+<!--
+    1.隐藏控件（controls）
+    2.加上对应的控制按钮
+    3.加点击事件分别实现不同的效果
+-->
+</body>
+<script>
+    var progress = document.getElementById("progress"),
+        video = document.getElementById("video"),
+        btnPlay = document.getElementById("btn_play"),
+        btnPause = document.getElementById("btn_pause"),
+        btnMuted = document.getElementById("btn_muted"),
+        volume = document.getElementById("volume"),
+        btnFullscreen = document.getElementById("btn_fullscreen"),
+        btnSpeedUp = document.getElementById("btn_speed_up"),
+        btnSpeedDown = document.getElementById("btn_speed_down"),
+        btnForward = document.getElementById("btn_forward"),
+        btnBack = document.getElementById("btn_back");
+
+    btnPlay.addEventListener("click",function () {
+        video.play();
+        this.disabled = true;
+        btnPause.disabled = false;
+    });
+    btnPause.addEventListener("click",function () {
+        video.pause();
+        this.disabled = true;
+        btnPlay.disabled = false;
+    });
+    btnMuted.addEventListener("click",function () {
+        //切换true/false取反在赋给自己；
+        video.muted = !video.muted;
+        /*if(video.muted){
+            //当前为静音状态
+            btnMuted.innerHTML = "取消静音";
+        }else{
+            btnMuted.innerHTML = "静音";
+        }*/
+        btnMuted.innerHTML = video.muted? "取消静音":"静音";
+
+    });
+    volume.addEventListener("change",function () {
+        //拿一下当前值；
+        video.volume = volume.value;
+    });
+
+
+    btnSpeedUp.addEventListener("click", function () {
+        video.playbackRate += 0.5;
+    });
+    btnSpeedDown.addEventListener("click", function () {
+        video.playbackRate -= 0.5;
+    });
+    btnForward.addEventListener("click",function () {
+        console.log(video.currentTime + 5);
+    });
+    btnBack.addEventListener("click",function () {
+        video.currentTime -= 5;
+    });
+    //注册视频播放状态变化事件
+    video.addEventListener("timeupdate",function(){
+//        console.log(111);
+        progress.value = (video.currentTime/video.duration)*100;
+    });
+    progress.addEventListener("click",function () {
+        console.log(progress.value);
+    });
+
+
+    btnFullscreen.addEventListener("click", function () {
+        Fullscreen(video);
+    });
+
+    function Fullscreen(ele){
+        if (ele.requestFullScreen) {
+            ele.requestFullScreen();
+        } else if (ele.webkitRequestFullScreen) {
+            ele.webkitRequestFullScreen()
+        } else if (ele.mozRequestFullScreen) {
+            ele.mozRequestFullScreen()
+        } else if (ele.oRequestFullScreen) {
+            ele.oRequestFullScreen()
+        } else if (ele.msRequestFullScreen) {
+            ele.msRequestFullScreen()
+        }
+    }
+</script>
+</html>
