@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义属性</title>
+</head>
+<body>
+<ul>
+    <!--自定义属性是为了通过DOM存储与DOM对象强相关的数据-->
+    <!--随便写自定义属性太乱，h5规定data-自定义属性；反而言之data-就是自定义属性-->
+    <li data-num="01" data-name="zssir">张三</li>
+    <li data-num="02" data-name="lssir">李四</li>
+    <li data-num="03" data-name="mzsir">麦子</li>
+</ul>
+<script>
+    //获取属性先获取DOM元素
+    //jquery的attr既可以设置又可以获取；
+    var lis = document.querySelectorAll("ul > li");
+    for (var i=0; i<lis.length; i++){
+//        lis[i].setAttribute("data-age", i);
+//        console.log(lis[i].getAttribute("data-num"));
+
+        //dataset 获取自定义属性；h5新增；
+        console.log(lis[i].dataset.num); //获取；
+        console.log(lis[i].dataset["num"]); //获取;建议用的方式；
+        console.log(lis[i].dataset.num = i); //设置；
+    }
+
+//    jq对比；jquery中为此也添加了一个data函数
+//    $("ul>li:eq(0)").data("","");
+//    原生是data属性，而jq是方法：一个参数是获取，两个参数是设置
+</script>
+</body>
+</html>
