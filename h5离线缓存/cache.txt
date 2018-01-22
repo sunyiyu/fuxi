@@ -1,0 +1,13 @@
+CACHE MANIFEST
+#version 1.0.5
+
+CACHE:
+    h5离线缓存.html
+    xxxx.png
+    xxxx.css
+    xxxx.img
+    xxxx.js
+    cache.txt
+
+NETWORK:
+    *
