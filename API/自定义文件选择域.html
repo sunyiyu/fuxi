@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自定义css文件选择域</title>
+</head>
+<body>
+<!--因为文件选择域不能修饰外观，所以我们将其隐藏换用别的元素显示-->
+<input type="file" name="" id="input_file" multiple style="display: none;">
+<input type="button" value="选择文件" id="btn">
+<ul id="result"></ul>
+</body>
+<script>
+    var btn = document.querySelector("#btn");
+    var inputFile = document.querySelector("#input_file");
+    var result = document.querySelector("#result");
+    btn.addEventListener("click",function () {
+        inputFile.click();
+    });
+    inputFile.addEventListener("change",function () {
+        //清除一下
+        result.innerHTML = "";
+        for(var i=0; i<inputFile.files.length; i++){
+            var file = inputFile.files[i];
+            var liEle = document.createElement("li");
+            liEle.innerHTML = file.name+";"+file.type+";"+parseInt(file.size/1024/1024)+"M;"+file.lastModifiedDate.toLocaleDateString()+" "+file.lastModifiedDate.toLocaleTimeString();
+            result.appendChild(liEle);
+        }
+    })
+</script>
+</html>

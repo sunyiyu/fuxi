@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>API-01</title>
+</head>
+<body>
+<!--所有文件API都是基于文件域（确保用户选择该文件）-->
+<input type="file" name="" id="input_file" multiple>
+<input type="button" value="读取文件的信息" id="btn">
+<ul id="result"></ul>
+<script>
+    //1.文件API默认可以拿到的属性：文件名、文件大小(单位是字节B)、最后修改时间、文件类型
+    var inputFile = document.querySelector("#input_file");
+    var result = document.querySelector("#result");
+    var btn = document.querySelector("#btn");
+    btn.addEventListener("click",function () {
+        for(var i=0; i<inputFile.files.length; i++){
+            var file = inputFile.files[i];
+            var liEle = document.createElement("li");
+            liEle.innerHTML = file.name+";"+file.type+";"+parseInt(file.size/1024/1024)+"M;"+file.lastModifiedDate.toLocaleDateString()+" "+file.lastModifiedDate.toLocaleTimeString();
+            console.log(liEle);
+            result.appendChild(liEle);
+        }
+    });
+
+</script>
+</body>
+</html>
