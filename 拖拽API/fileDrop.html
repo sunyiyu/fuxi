@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>file-drop</title>
+    <style>
+        #target{
+            border:5px dashed #cccccc;
+            height: 200px;
+            text-align: center;
+            line-height: 200px;
+            font-size: 50px;
+            color: #c0c0c0;
+        }
+        .over{
+            box-shadow: 0 0 30px #ccc inset;
+        }
+        /*inset内阴影*/
+    </style>
+</head>
+<body>
+    <div id="target">
+        拖拽到此处
+    </div>
+    <script>
+        var target = document.querySelector("#target");
+
+        //阻止默认事件；添加、删除class；
+        target.addEventListener("dragover",function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        });
+        target.addEventListener("dragenter",function (e) {
+            this.classList.add("over");
+        });
+        target.addEventListener("dragleave",function (e) {
+            this.classList.remove("over");
+        });
+        //直接注册放下事件；
+        target.addEventListener("drop",function (e) {
+            //阻止默认事件；
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove("over");
+            console.log("有文件来了");
+
+            for(var i=0;i<e.dataTransfer.files.length; i++){
+                console.log(e.dataTransfer.files[i].name);
+            }
+        });
+
+    </script>
+</body>
+</html>

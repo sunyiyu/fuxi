@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拖拽属性dataTransfer</title>
+    <style>
+        p{
+            border:1px solid #c0c0c0;
+        }
+        #target{
+            border:5px dashed #cccccc;
+            height: 200px;
+            text-align: center;
+            line-height: 200px;
+            font-size: 50px;
+            color: #c0c0c0;
+        }
+        .over{
+            box-shadow: 0 0 30px #ccc inset;
+        }
+        /*inset内阴影*/
+    </style>
+</head>
+<body>
+<p draggable="true" data-source-id="1">拽我啊 拽我啊！</p>
+<!--html中默认值只允许 img 和 a 被拖拽，想让其他元素能被拖拽draggable = "true"-->
+<img src="01.png" alt="" height="100">
+<br>
+<a  data-source-id="2" href="http://www.sina.com.cn">新浪</a>
+
+<div id="target">
+    快到碗里来
+</div>
+</body>
+<script>
+    //在H5中为每个DOM元素添加一组ondrag---事件；
+    var p = document.querySelector("p");
+    //设置target上有元素经过时的效果
+    var target = document.querySelector("#target");
+    var a = document.querySelector("a");
+
+    //Handler处理函数；
+    //开始处理函数；
+    function dragstartHandler(e) {
+        var sourceId = this.dataset.sourceId;
+        e.dataTransfer.setData("source",sourceId);
+        p.style.borderColor = "#f00";
+    };
+
+    p.addEventListener("dragstart",dragstartHandler);
+    a.addEventListener("dragstart",dragstartHandler);
+
+
+        //注册目标元素放事件;之前必须阻止浏览器默认拖拽事件；
+    target.addEventListener("drop",function (e) {
+        //当有元素扔到当前target上时触发
+        var sourceId = e.dataTransfer.getData("source");
+        //console.log(sourceId);
+        var str = "[data-source-id = '"+ sourceId +"']";
+        this.appendChild(document.querySelector(str));
+        this.classList.remove("over");
+    });
+
+
+
+    p.addEventListener("dragend",function () {
+        p.style.borderColor = "#c0c0c0"
+    });
+    target.addEventListener("dragenter",function () {
+        //元素进入是触发
+        this.style.borderColor = "#f00";
+        this.classList.add("over");
+    });
+    target.addEventListener("dragleave",function () {
+        this.style.borderColor = "#cccccc";
+        this.classList.remove("over");
+    });
+
+    //如果想让drop事件触发，一定要要在dragover事件中阻止系统默认事件
+    target.addEventListener("dragover",function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    });
+</script>
+</html>
